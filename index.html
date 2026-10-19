@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Chúc mừng 20/10 🌸</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Quicksand', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: linear-gradient(160deg, #ffe0ec 0%, #ffc2d9 45%, #ff9fc2 100%);
+    color: #8a1c4a;
+  }
+
+  #bg, #balloons {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  #bg { z-index: 0; }
+  #balloons { z-index: 1; }
+
+  .screen {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    text-align: center;
+    transition: opacity .8s ease, transform .8s ease;
+  }
+  .screen.hidden {
+    opacity: 0;
+    transform: scale(.92);
+    pointer-events: none;
+  }
+
+  /* ===== Màn 1: trái tim ===== */
+  .big-heart {
+    position: relative;
+    width: min(78vw, 340px);
+    aspect-ratio: 1 / .92;
+    animation: beat 1.3s ease-in-out infinite;
+    filter: drop-shadow(0 18px 30px rgba(214, 51, 108, .45));
+    cursor: pointer;
+  }
+  .big-heart svg { width: 100%; height: 100%; }
+  .big-heart .label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 14%;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(120, 0, 40, .35);
+  }
+  .big-heart .label .date {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(52px, 17vw, 80px);
+    font-weight: 700;
+    line-height: 1;
+  }
+  .big-heart .label .sub {
+    margin-top: 6px;
+    font-size: clamp(14px, 4.2vw, 18px);
+    font-weight: 600;
+    letter-spacing: .5px;
+  }
+
+  @keyframes beat {
+    0%, 100% { transform: scale(1); }
+    15% { transform: scale(1.08); }
+    30% { transform: scale(.97); }
+    45% { transform: scale(1.05); }
+    60% { transform: scale(1); }
+  }
+
+  .title {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(30px, 9vw, 44px);
+    margin-top: 28px;
+    color: #b0175a;
+    text-shadow: 0 2px 0 #fff;
+  }
+  .hint {
+    margin-top: 8px;
+    font-size: 15px;
+    opacity: .8;
+  }
+
+  .btn {
+    margin-top: 26px;
+    padding: 14px 38px;
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #ff5c93, #e0246b);
+    box-shadow: 0 10px 24px rgba(224, 36, 107, .4);
+    cursor: pointer;
+    animation: glow 2s ease-in-out infinite;
+    transition: transform .15s;
+  }
+  .btn:active { transform: scale(.95); }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 10px 24px rgba(224, 36, 107, .4); }
+    50% { box-shadow: 0 10px 34px rgba(224, 36, 107, .75); }
+  }
+
+  /* ===== Màn 2: bài thơ ===== */
+  .card {
+    position: relative;
+    width: min(92vw, 420px);
+    padding: 34px 26px 28px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, .82);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 20px 50px rgba(176, 23, 90, .25);
+  }
+  .card::before {
+    content: '🌷';
+    position: absolute;
+    top: -26px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 44px;
+  }
+  .card h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(28px, 8vw, 36px);
+    color: #d6336c;
+    margin-bottom: 18px;
+  }
+  .poem p {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(21px, 6vw, 26px);
+    line-height: 1.55;
+    color: #8a1c4a;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity .9s ease, transform .9s ease;
+  }
+  .poem p.show { opacity: 1; transform: none; }
+  .poem p.gap { margin-top: 14px; }
+
+  .wish {
+    margin-top: 20px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #a3395f;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  .sign {
+    margin-top: 12px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 24px;
+    color: #d6336c;
+    text-align: right;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  .wish.show, .sign.show { opacity: 1; }
+
+  /* ===== Bóng bay trái tim ===== */
+  .balloon {
+    position: absolute;
+    bottom: -160px;
+    will-change: transform;
+    animation: rise linear forwards;
+  }
+  .balloon .sway {
+    animation: sway ease-in-out infinite alternate;
+    transform-origin: 50% 100%;
+  }
+  .balloon svg { display: block; overflow: visible; }
+
+  @keyframes rise {
+    to { transform: translateY(calc(-100vh - 220px)); }
+  }
+  @keyframes sway {
+    from { transform: translateX(-18px) rotate(-6deg); }
+    to   { transform: translateX(18px) rotate(6deg); }
+  }
+
+  /* Tim nhỏ bay nền */
+  .mini {
+    position: absolute;
+    bottom: -30px;
+    color: #fff;
+    opacity: .7;
+    animation: rise linear forwards;
+  }
+
+  /* Tim nổ khi chạm */
+  .pop {
+    position: fixed;
+    z-index: 5;
+    pointer-events: none;
+    font-size: 20px;
+    animation: pop 1s ease-out forwards;
+  }
+  @keyframes pop {
+    from { transform: translate(-50%, -50%) scale(.5); opacity: 1; }
+    to   { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1.2); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div id="bg"></div>
+<div id="balloons"></div>
+
+<!-- Màn 1 -->
+<section id="s1" class="screen">
+  <div class="big-heart" id="heart">
+    <svg viewBox="0 0 100 92">
+      <defs>
+        <linearGradient id="hg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ff7aa8"/>
+          <stop offset="100%" stop-color="#e0185f"/>
+        </linearGradient>
+      </defs>
+      <path fill="url(#hg)" d="M50 88 C20 66 2 50 2 28 C2 13 14 2 28 2 C38 2 46 8 50 16 C54 8 62 2 72 2 C86 2 98 13 98 28 C98 50 80 66 50 88 Z"/>
+      <ellipse cx="27" cy="22" rx="10" ry="6" fill="#fff" opacity=".35" transform="rotate(-30 27 22)"/>
+    </svg>
+    <div class="label">
+      <div class="date">20/10</div>
+      <div class="sub">Ngày Phụ nữ Việt Nam</div>
+    </div>
+  </div>
+  <div class="title">Gửi em một món quà nhỏ 💝</div>
+  <div class="hint">Chạm vào trái tim thử xem nè ✨</div>
+  <button class="btn" id="next">Tiếp tục 💌</button>
+</section>
+
+<!-- Màn 2 -->
+<section id="s2" class="screen hidden">
+  <div class="card">
+    <h2>Chúc mừng 20/10</h2>
+    <div class="poem">
+      <p>Gửi em một chút nắng hồng,</p>
+      <p>Chúc em vui vẻ, thong dong mỗi ngày.</p>
+      <p>Nụ cười em mãi thật hay,</p>
+      <p>Ước mơ em vẫn đong đầy tháng năm.</p>
+      <p>Hai mươi tháng Mười ghé thăm,</p>
+      <p>Chúc em luôn được êm đằm, xinh tươi!</p>
+    </div>
+    <div class="wish">Chúc em 20/10 thật vui, luôn xinh đẹp<br>và gặp thật nhiều may mắn nhé 😊</div>
+    <div class="sign">— Anh gửi em 🌸</div>
+  </div>
+</section>
+
+<script>
+  const bg = document.getElementById('bg');
+  const balloonLayer = document.getElementById('balloons');
+  const rand = (a, b) => Math.random() * (b - a) + a;
+
+  // Tim nhỏ trắng bay nhẹ ở nền
+  function spawnMini() {
+    const el = document.createElement('div');
+    el.className = 'mini';
+    el.textContent = '♥';
+    el.style.left = rand(0, 100) + 'vw';
+    el.style.fontSize = rand(10, 22) + 'px';
+    el.style.animationDuration = rand(7, 13) + 's';
+    bg.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+  setInterval(spawnMini, 600);
+
+  // Bóng bay trái tim có dây
+  const colors = [
+    ['#ff8fb4', '#ff3d7f'],
+    ['#ff6b6b', '#e01e37'],
+    ['#ffb3d1', '#ff6fa5'],
+    ['#c792ea', '#9b5de5'],
+    ['#ffd166', '#f4a261'],
+    ['#ff99c8', '#f15bb5'],
+  ];
+  let bid = 0;
+  function spawnBalloon() {
+    const [c1, c2] = colors[Math.floor(Math.random() * colors.length)];
+    const size = rand(42, 78);
+    const id = 'g' + (bid++);
+    const el = document.createElement('div');
+    el.className = 'balloon';
+    // Ưu tiên hai bên mép để không che bài thơ
+    const side = Math.random();
+    const left = side < .4 ? rand(-4, 22) : side < .8 ? rand(74, 96) : rand(22, 74);
+    el.style.left = left + 'vw';
+    el.style.animationDuration = rand(9, 15) + 's';
+    el.innerHTML = `
+      <div class="sway" style="animation-duration:${rand(2, 3.5)}s">
+        <svg width="${size}" height="${size * 2}" viewBox="0 0 100 200">
+          <defs>
+            <radialGradient id="${id}" cx="35%" cy="30%" r="75%">
+              <stop offset="0%" stop-color="${c1}"/>
+              <stop offset="100%" stop-color="${c2}"/>
+            </radialGradient>
+          </defs>
+          <path d="M50 88 Q44 120 54 145 Q62 170 48 198" stroke="#fff" stroke-width="1.6" fill="none" opacity=".85"/>
+          <path d="M45 92 L55 92 L50 86 Z" fill="${c2}"/>
+          <path fill="url(#${id})" d="M50 88 C20 66 2 50 2 28 C2 13 14 2 28 2 C38 2 46 8 50 16 C54 8 62 2 72 2 C86 2 98 13 98 28 C98 50 80 66 50 88 Z"/>
+          <ellipse cx="27" cy="24" rx="9" ry="5" fill="#fff" opacity=".45" transform="rotate(-30 27 24)"/>
+        </svg>
+      </div>`;
+    balloonLayer.appendChild(el);
+    el.addEventListener('animationend', () => el.remove());
+  }
+
+  // Chạm vào đâu cũng nổ tim
+  function burst(x, y, n = 10) {
+    const icons = ['💖', '💕', '💗', '🌸', '✨'];
+    for (let i = 0; i < n; i++) {
+      const p = document.createElement('div');
+      p.className = 'pop';
+      p.textContent = icons[Math.floor(Math.random() * icons.length)];
+      const ang = (Math.PI * 2 * i) / n;
+      const dist = rand(50, 110);
+      p.style.left = x + 'px';
+      p.style.top = y + 'px';
+      p.style.setProperty('--dx', Math.cos(ang) * dist + 'px');
+      p.style.setProperty('--dy', Math.sin(ang) * dist + 'px');
+      document.body.appendChild(p);
+      p.addEventListener('animationend', () => p.remove());
+    }
+  }
+  document.addEventListener('pointerdown', e => burst(e.clientX, e.clientY, 8));
+
+  document.getElementById('heart').addEventListener('click', e => {
+    burst(e.clientX, e.clientY, 16);
+  });
+
+  // Chuyển sang bài thơ
+  let started = false;
+  document.getElementById('next').addEventListener('click', () => {
+    if (started) return;
+    started = true;
+    document.getElementById('s1').classList.add('hidden');
+    document.getElementById('s2').classList.remove('hidden');
+
+    for (let i = 0; i < 8; i++) setTimeout(spawnBalloon, i * 250);
+    setInterval(spawnBalloon, 900);
+
+    const lines = document.querySelectorAll('.poem p');
+    lines.forEach((p, i) => setTimeout(() => p.classList.add('show'), 900 + i * 900));
+    const end = 900 + lines.length * 900;
+    setTimeout(() => document.querySelector('.wish').classList.add('show'), end + 300);
+    setTimeout(() => document.querySelector('.sign').classList.add('show'), end + 1200);
+  });
+</script>
+</body>
+</html>
